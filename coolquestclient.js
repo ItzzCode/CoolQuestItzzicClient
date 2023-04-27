@@ -33,6 +33,7 @@ class tile {
 	}
 	
 	display( x, y, size ) {
+		fill(0)
 		textSize(size)
 		text(`${this.content.representation}`, x, y)
 	}
@@ -47,31 +48,28 @@ class section extends tile {
 
 	display( x, y, size ) {
 		fill(this.owner.color)
-		super.display( x, y, size )
+		rect(x, y, size, size)
+	}
+
+	displayAll( size ) {
+		for( let i = 0; i < this.content.length; i++ ) {
+			for( let j = 0; j < this.content[i].length; j++ ) {
+				this.content[i][j].display(j*size, i*size, size)
+			}
+		}
 	}
 }
-
 
 var tileRes = 50
 var tileX = 10
 var tileY = 10
 
-const country1 = new country("Greenland", [0, 175, 0], 0, 10)
-const tile1 = new tile(new building("H"));
-const section1 = new section([
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,],
-	[tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1, tile1,]
-], country1)
-
+var countries = [
+	new country("Greenland", [0, 175, 0], 100, 12),
+	new country("Sus!", [200, 0, 0], 2, 30),
+	new country("Tengistan", [100, 0, 100], 43, 20)
+]
+let yourCountry = 0
 
 function setup() {
 	//createCanvas(800, 600);
@@ -87,13 +85,24 @@ function draw() {
 		}
 	}
 
+	// Sidebar
 	fill(128)
 	rect(tileX*tileRes, 0, 3*tileRes, tileY*tileRes)
-
-	section1.display(tileRes*4, tileRes*4, tileRes)
 	
 	let textRef = [tileRes*tileX, 0]
+	let textRefY2 = textRef[1]+tileRes*(tileY-2)
+
 	textSize(24)
 	fill(0)
 	text("CoolQuest", textRef[0], textRef[1])
+	textSize(18)
+	text("Countries:", textRef[0], textRef[1]+25)
+
+	fill(countries[yourCountry].color)
+	text(`Name: ${countries[yourCountry].name}`, textRef[0], textRefY2+0)
+
+	fill(0)
+	text(`Gold: ${countries[yourCountry].gold}`, textRef[0], textRefY2+19)
+	text(`People: ${countries[yourCountry].people}`, textRef[0], textRefY2+38)
+
 }
