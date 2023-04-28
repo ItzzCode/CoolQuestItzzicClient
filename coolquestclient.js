@@ -65,11 +65,11 @@ var tileX = 10
 var tileY = 10
 
 var countries = [
-	new country("Greenland", [0, 175, 0], 100, 12),
+	new country("Greenland", [50, 205, 50], 100, 12),
 	new country("Sus!", [200, 0, 0], 2, 30),
-	new country("Tengistan", [100, 0, 100], 43, 20)
+	new country("LOWAS", [0, 250, 250], 43, 20)
 ]
-let yourCountry = 0
+let yourCountry = 1
 
 function setup() {
 	//createCanvas(800, 600);
@@ -89,14 +89,19 @@ function draw() {
 	fill(128)
 	rect(tileX*tileRes, 0, 3*tileRes, tileY*tileRes)
 	
-	let textRef = [tileRes*tileX, 0]
+	let textRef = [tileRes*tileX+1, 0]
 	let textRefY2 = textRef[1]+tileRes*(tileY-2)
 
 	textSize(24)
 	fill(0)
 	text("CoolQuest", textRef[0], textRef[1])
+
 	textSize(18)
 	text("Countries:", textRef[0], textRef[1]+25)
+	for( let i = 0; i < countries.length; i++ ) {
+		fill(countries[i].color)
+		text(`${countries[i].name}`, textRef[0], textRef[1]+(i*18)+(i*2)+43)
+	}
 
 	fill(countries[yourCountry].color)
 	text(`Name: ${countries[yourCountry].name}`, textRef[0], textRefY2+0)
