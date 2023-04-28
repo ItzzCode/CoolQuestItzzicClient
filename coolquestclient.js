@@ -11,24 +11,26 @@ class country {
 	}
 }
 
-class object {
+class entity {
 	representation = "?"
 	type = "generic"
-	constructor(representation, type) {
+	constructor( representation, type ) {
 		this.representation = representation
 		this.type = type
 	}
 }
 
-class building extends object {
-	constructor(representation) {
+class building extends entity {
+	content;
+	constructor( representation, content ) {
 		super(representation, "building")
+		this.content = content
 	}
 }
 
 class tile {
 	content;
-	constructor(content) {
+	constructor( content ) {
 		this.content = content
 	}
 	
